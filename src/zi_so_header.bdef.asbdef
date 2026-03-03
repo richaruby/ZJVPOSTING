@@ -1,0 +1,94 @@
+managed implementation in class zbp_i_so_header unique;
+strict ( 2 );
+
+define behavior for ZI_SO_Header //alias <alias_name>
+persistent table zso_hdr
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+
+
+  field ( numbering : managed, readonly ) HeaderUUID;
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  association _Items { create; }
+  mapping for zso_hdr
+  {
+    HeaderUUID = header_uuid;
+    SalesOrderType = sales_order_type;
+    SalesOrganization = sales_organization;
+    DistributionChannel = distribution_channel;
+    OrganizationDivision = organization_division;
+    SalesDistrict = sales_district;
+    SoldToParty = sold_to_party;
+    PurchaseOrderByCustomer = purchase_order_by_customer;
+    CustomerPurchaseOrderDate = customer_purchase_order_date;
+    TransactionCurrency = transaction_currency;
+    CustomerPaymentTerms = customer_payment_terms;
+    SDDocumentReason = sd_document_reason;
+    RequestedDeliveryDate = requested_delivery_date;
+    HeaderBillingBlockReason = header_billing_block_reason;
+    DeliveryBlockReason = delivery_block_reason;
+    AccountingExchangeRate =  accounting_exchange_rate;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+
+  }
+}
+
+define behavior for ZI_SO_Item //alias <alias_name>
+persistent table zso_itm
+lock dependent by _Header
+authorization dependent by _Header
+etag master LastChangedAt
+{
+  update;
+  delete;
+  field ( numbering : managed, readonly ) ItemUUID;
+  field ( readonly ) HeaderUUID, CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  association _Header;
+  mapping for zso_itm
+  {
+  ItemUUID                    = item_uuid;
+    HeaderUUID                  = header_uuid;
+
+    SalesOrderItem              = sales_order_item;
+    PurchaseOrderByCustomer     = purchase_order_by_customer;
+    PurchaseOrderByShipToParty  = purch_ord_shipto_party;
+    Material                    = material;
+    MaterialByCustomer          = material_by_customer;
+    RequestedQuantity           = requested_quantity;
+    Batch                       = batch;
+    ProductionPlant             = production_plant;
+    StorageLocation             = storage_location;
+    DeliveryPriority            = delivery_priority;
+    IncotermsClassification     = incoterms_classification;
+    IncotermsTransferLocation   = incoterms_transfer_location;
+    IncotermsLocation1          = incoterms_location1;
+    CustomerPaymentTerms        = customer_payment_terms;
+
+    ConditionType1              = condition_type_1;
+    ConditionRateValue1         = condition_rate_value_1;
+    ConditionType2              = condition_type_2;
+    ConditionRateValue2         = condition_rate_value_2;
+    ConditionType3              = condition_type_3;
+    ConditionRateValue3         = condition_rate_value_3;
+
+    PartnerFunction1            = partner_function_1;
+    Customer1                   = customer_1;
+    PartnerFunction2            = partner_function_2;
+    Customer2                   = customer_2;
+
+    CreatedBy                   = created_by;
+    CreatedAt                   = created_at;
+    LastChangedBy               = last_changed_by;
+    LastChangedAt               = last_changed_at;
+  }
+
+}

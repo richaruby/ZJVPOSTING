@@ -1,0 +1,96 @@
+managed implementation in class zbp_i_fb70_header unique;
+strict ( 2 );
+
+define behavior for ZI_FB70_Header //alias <alias_name>
+persistent table zfb70_hdr
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  determination zjvpost on modify { field HeaderUUID; create; }
+
+  field ( numbering : managed, readonly ) HeaderUUID;
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  association _Items { create; }
+  mapping for zfb70_hdr
+    {
+      HeaderUUID        = header_uuid;
+      CompanyCode       = company_code;
+      TransactionType   = transaction_type;
+      InvoiceDate       = invoice_date;
+      PostingDate       = posting_date;
+      Reference         = reference;
+      GrossAmount       = gross_amount;
+      Currency          = currency;
+      TaxCalcInd        = tax_calc_ind;
+      TaxCode           = tax_code;
+      BusinessPlace     = business_place;
+      SectionCode       = section_code;
+      Text              = text;
+      GstPartner        = gst_partner;
+      PlaceOfSupply     = place_of_supply;
+      BaselineDate      = baseline_date;
+      PaymentTerm       = payment_term;
+      Assignment        = assignment;
+      HeaderText        = header_text;
+      WithholdingTaxInd = withholding_tax_ind;
+      Belnr             = belnr;
+      Gjahr             = gjahr;
+      Reversedoc        = reverse_doc;
+      Reverseyr         = reverse_yr;
+      Reverse           = reverse;
+      Reversereason     = reverse_reason;
+      Status            = status;
+      Message           = message;
+      CreatedBy         = created_by;
+      CreatedAt         = created_at;
+      LastChangedBy     = last_changed_by;
+      LastChangedAt     = last_changed_at;
+      Kunnr             = kunnr;
+      Lifnr             = lifnr;
+      Doctype           = doctype;
+    }
+}
+
+define behavior for ZI_FB70_Item alias Item//alias <alias_name>
+persistent table zfb70_itm
+lock dependent by _Header
+authorization dependent by _Header
+etag master LastChangedAt
+{
+  update;
+  delete;
+  field ( numbering : managed, readonly ) ItemUUID;
+  field ( readonly ) HeaderUUID, CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  association _Header;
+  mapping for zfb70_itm
+    {
+      ItemUUID            = item_uuid;
+      HeaderUUID          = header_uuid;
+      GlAccount           = gl_account;
+      DrcrInd             = drcr_ind;
+      NetAmount           = net_amount;
+      Currency            = currency;
+      Plant               = plant;
+      ProfitCenter        = profit_center;
+      Housebank           = housebank;
+      Bank_acc            = bank_acc;
+      Costcenter          = Costcenter;
+      CreatedBy           = created_by;
+      CreatedAt           = created_at;
+      LastChangedBy       = last_changed_by;
+      LastChangedAt       = last_changed_at;
+      Kunnr               = kunnr;
+      Lifnr               = lifnr;
+      SpecialGlIndicator  = special_gl_indicator;
+      PaymentMethod       = payment_method;
+      AssignmentReference = assignment_reference;
+      ItemText            = item_text;
+      TaxCode             = tax_code;
+      BusinessPlace       = business_place;
+    }
+}

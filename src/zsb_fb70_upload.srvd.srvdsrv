@@ -1,0 +1,5 @@
+@EndUserText.label: 'FB70 Upload API (OData V4)'
+define service ZSB_FB70_UPLOAD {
+  expose ZC_FB70_Header as FB70Headers;
+  expose ZC_FB70_Item   as FB70Items;
+}

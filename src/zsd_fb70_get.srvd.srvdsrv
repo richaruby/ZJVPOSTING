@@ -1,0 +1,4 @@
+@EndUserText.label: 'FB70 Get API'
+define service ZSD_FB70_GET {
+  expose ZC_FB70_PostedToday as PostData;
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'SB for SO Header'
+define service ZSB_SO_HEADER {
+  expose ZC_SO_Header as Soheader;
+  expose ZC_SO_ITEM   as Soitm;
+}
